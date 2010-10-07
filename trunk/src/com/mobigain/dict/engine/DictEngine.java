@@ -1,10 +1,13 @@
 package com.mobigain.dict.engine;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.RandomAccessFile;
 
 import com.mobigain.dict.compare.*;
+import SevenZip.Compression.LZMA.*;
 
 public class DictEngine
 {
@@ -20,7 +23,7 @@ public class DictEngine
 	KR_Compare kr_compare = new KR_Compare();
 	VN_Compare vn_compare = new VN_Compare();
 	
-	BLOCK_INFO dataBlockInfo;
+	BLOCK_INFO[] dataBlockInfo = null;
 	
 	private byte[] dataBlock = new byte[BLOCK_DATA_SIZE];
 	private byte[] indexData = new byte[BLOCK_DATA_SIZE];
@@ -32,6 +35,7 @@ public class DictEngine
 	private int currentblockID;
 	
 	RandomAccessFile fDic = null;
+	Decoder decoder = new Decoder();
 	public DictEngine()
 	{
 		
@@ -87,6 +91,30 @@ public class DictEngine
 	public int NumWordInDict()
 	{
 		return totalWord;
+	}
+	
+	void ReadDataAtBlock(int block)
+	{
+		try
+		{
+			int posInFile = dataBlockInfo[block].blockAdress;
+			int dataSize = dataBlockInfo[block].blockSize;
+			byte[] data = new byte[dataSize];
+			
+			fDic.seek(posInFile);
+			fDic.read(data, 0, dataSize);
+			
+			ByteArrayInputStream inStream = new ByteArrayInputStream(data);
+			ByteArrayOutputStream outStream = new ByteArrayOutputStream(BLOCK_DATA_SIZE);
+			int outSize = 0;
+			boolean bDecode = decoder.Code(inStream, outStream, outSize);			
+		}
+		catch (Exception ex)
+		{
+			
+		}
+		
+		
 	}
 }
 	/*
