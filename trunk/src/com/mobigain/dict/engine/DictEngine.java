@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import com.mobigain.dict.compare.*;
@@ -34,11 +35,22 @@ public class DictEngine
 	private int indexInBlock;
 	private int currentblockID;
 	
-	RandomAccessFile fDic = null;
-	Decoder decoder = new Decoder();
+	RandomAccessFile fDic = null;	
 	public DictEngine()
 	{
 		
+	}
+	
+	// 2-byte number
+	static short ShortC2Java(int i)
+	{
+	    return (short)(((i>>8)&0xff)|((i << 8)&0xff00));
+	}
+
+	// 4-byte number
+	static int IntC2Java(int i)
+	{
+	    return((i&0xff)<<24)|((i&0xff00)<<8)|((i&0xff0000)>>8)|((i>>24)&0xff);
 	}
 	
 	public void OpenDict(String path)
@@ -55,17 +67,29 @@ public class DictEngine
 			
 			DIC_HEADER dicHeader = new DIC_HEADER();
 			fDic.seek(0);
-			dicHeader.numEntry = fDic.readInt();
-			dicHeader.numBlock = fDic.readInt();
+			dicHeader.numEntry = IntC2Java(fDic.readInt());
+			dicHeader.numBlock = IntC2Java(fDic.readInt());
+			
 			fDic.read(dicHeader.bRes, 0, 56);
 			
 			numblockInDic = dicHeader.numBlock;
-		
-		
+			dataBlockInfo = new BLOCK_INFO[numblockInDic];
+			
+			for(int i = 0; i < numblockInDic; i++)
+			{
+				dataBlockInfo[i] = new BLOCK_INFO();
+				dataBlockInfo[i].blockAdress = IntC2Java(fDic.readInt());
+				dataBlockInfo[i].blockSize = ShortC2Java(fDic.readShort());
+				dataBlockInfo[i].numWord = ShortC2Java(fDic.readShort());
+			}
+			
+			ReadDataAtBlock(0);
+			ReadDataAtBlock(1);
 		}
 		catch (Exception ex)
 		{
-			
+			String exStr = ex.getMessage();
+			int a = 0;
 		}
 	}
 	
@@ -101,17 +125,48 @@ public class DictEngine
 			int dataSize = dataBlockInfo[block].blockSize;
 			byte[] data = new byte[dataSize];
 			
-			fDic.seek(posInFile);
+			fDic.seek(posInFile + 1);
 			fDic.read(data, 0, dataSize);
 			
 			ByteArrayInputStream inStream = new ByteArrayInputStream(data);
-			ByteArrayOutputStream outStream = new ByteArrayOutputStream(BLOCK_DATA_SIZE);
-			int outSize = 0;
-			boolean bDecode = decoder.Code(inStream, outStream, outSize);			
+			ByteArrayOutputStream outStream = new ByteArrayOutputStream(BLOCK_DATA_SIZE);			
+			
+
+			Decoder decoder = new Decoder();			
+			
+			byte[] properties = new byte[5];
+			if (inStream.read(properties, 0, 5) != 5)			
+			{
+				throw new IOException("input data is too short");
+			}
+			
+			decoder.SetDecoderProperties(properties);
+			
+			long outSize = 0;
+			for (int i = 0; i < 8; i++)
+			{
+				int v = inStream.read();
+				if (v < 0)
+				{
+					throw new IOException("Can't read stream size");
+				}
+				outSize |= ((long)v) << (8 * i);
+			}
+			
+			long time = System.currentTimeMillis();
+			if (!decoder.Code(inStream, outStream, outSize))
+			{
+				throw new IOException("Error in data stream");
+			}
+			
+			time = System.currentTimeMillis() - time;
+			outStream.close();
+			inStream.close();
 		}
 		catch (Exception ex)
 		{
-			
+			String exStr = ex.getMessage();
+			int a = 0;			
 		}
 		
 		
