@@ -127,7 +127,9 @@ public class DictEngine
 			
 			fDic.seek(posInFile + 1);
 			fDic.read(data, 0, dataSize);
-			
+			byte[] outData = LzmaDecompress.LZMA_Decompress(data);
+			int size = outData.length;
+			/*
 			ByteArrayInputStream inStream = new ByteArrayInputStream(data);
 			ByteArrayOutputStream outStream = new ByteArrayOutputStream(BLOCK_DATA_SIZE);			
 			
@@ -162,6 +164,7 @@ public class DictEngine
 			time = System.currentTimeMillis() - time;
 			outStream.close();
 			inStream.close();
+			*/
 		}
 		catch (Exception ex)
 		{
