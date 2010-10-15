@@ -6,6 +6,11 @@ import android.app.Activity;
 import android.os.Bundle;
 
 public class MainSearch extends Activity {
+    /* load our native library */
+    static {
+        System.loadLibrary("dictdroid");
+    }
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {

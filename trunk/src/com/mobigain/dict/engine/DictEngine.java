@@ -7,6 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import android.graphics.Bitmap;
+import android.os.SystemClock;
+
 import com.mobigain.dict.compare.*;
 import SevenZip.Compression.LZMA.*;
 
@@ -36,6 +39,10 @@ public class DictEngine
 	private int currentblockID;
 	
 	RandomAccessFile fDic = null;	
+	
+	private static native void DecoderLzma(byte[] data, int dataSize, byte[] outData);
+	
+	
 	public DictEngine()
 	{
 		
@@ -127,7 +134,12 @@ public class DictEngine
 			
 			fDic.seek(posInFile + 1);
 			fDic.read(data, 0, dataSize);
-			byte[] outData = LzmaDecompress.LZMA_Decompress(data);
+			
+			byte[] outData = new byte[66000];
+			long time = SystemClock.uptimeMillis();//System.currentTimeMillis();
+			DecoderLzma(data, dataSize, outData);
+			//byte[] outData = LzmaDecompress.LZMA_Decompress(data);
+			time = /*System.currentTimeMillis()*/SystemClock.uptimeMillis() - time;
 			int size = outData.length;
 			/*
 			ByteArrayInputStream inStream = new ByteArrayInputStream(data);
