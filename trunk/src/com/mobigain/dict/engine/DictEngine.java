@@ -132,7 +132,7 @@ public class DictEngine
 			int dataSize = dataBlockInfo[block].blockSize;
 			byte[] data = new byte[dataSize];
 			
-			fDic.seek(posInFile + 1);
+			fDic.seek(posInFile);
 			fDic.read(data, 0, dataSize);
 			
 			byte[] outData = new byte[66000];
