@@ -4,6 +4,10 @@
 #include "LzmaDecode.h"
 #include "BranchX86.h"
 
+#include <android/log.h>
+#define  LOG_TAG    "libgl2jni"
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+
 #define LZMA_PROPS_SIZE 14
 #define LZMA_SIZE_OFFSET 6
 
@@ -17,7 +21,10 @@ int LzmaRamGetUncompressedSize(
     return 1;
   *outSize = 0;
   for(i = 0; i < sizeof(size_t); i++)
+  {
     *outSize += ((size_t)inBuffer[LZMA_SIZE_OFFSET + i]) << (8 * i);
+    LOGI("Value %d %d: %d", LZMA_SIZE_OFFSET + i, inBuffer[LZMA_SIZE_OFFSET + i], *outSize);
+  }
   for(; i < 8; i++)
     if (inBuffer[LZMA_SIZE_OFFSET + i] != 0)
       return 1;
