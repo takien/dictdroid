@@ -13,10 +13,17 @@
 #define  LOG_TAG    "libgl2jni"
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 
-void Java_com_mobigain_dict_engine_DictEngine_DecoderLzma( JNIEnv* env, jobject thiz, jbyte* data, jint dataSize, jbyte* outData)
+void Java_com_mobigain_dict_engine_DictEngine_DecoderLzma( JNIEnv* env, jobject thiz, jbyteArray byteArray, jint dataSize, jbyte* outData)
 {
+
 	size_t outSize;
-	LOGI("Hello----------------------------------");
+	int i;
+	jbyte* data = (*env)->GetByteArrayElements(env,byteArray,NULL);
+
+	LOGI("Datasize %d----------------------------------", dataSize);
+	for(i = 0; i < 10; i++)
+		LOGI("Index %d: %d", i, (unsigned char)data[i]);
+
 	if (LzmaRamGetUncompressedSize((unsigned char*)data, dataSize, &outSize) != 0)
 		return;
 
