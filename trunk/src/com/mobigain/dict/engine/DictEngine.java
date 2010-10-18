@@ -40,7 +40,7 @@ public class DictEngine
 	
 	RandomAccessFile fDic = null;	
 	
-	private static native void DecoderLzma(byte[] data, int dataSize, byte[] outData);
+	private static native void DecoderLzma(byte[] data, int dataSize, byte[] outData, int outDataSize);
 	
 	
 	public DictEngine()
@@ -90,8 +90,8 @@ public class DictEngine
 				dataBlockInfo[i].numWord = ShortC2Java(fDic.readShort());
 			}
 			
-			ReadDataAtBlock(0);
-			ReadDataAtBlock(1);
+			ReadDataAtBlock(indexData, 0);
+			ReadDataAtBlock(dataBlock, 1);
 		}
 		catch (Exception ex)
 		{
@@ -124,7 +124,7 @@ public class DictEngine
 		return totalWord;
 	}
 	
-	void ReadDataAtBlock(int block)
+	void ReadDataAtBlock(byte[] blockData, int block)
 	{
 		try
 		{
@@ -135,12 +135,11 @@ public class DictEngine
 			fDic.seek(posInFile);
 			fDic.read(data, 0, dataSize);
 			
-			byte[] outData = new byte[66000];
 			long time = SystemClock.uptimeMillis();//System.currentTimeMillis();
-			DecoderLzma(data, dataSize, outData);
+			DecoderLzma(data, dataSize, blockData, BLOCK_DATA_SIZE);
 			//byte[] outData = LzmaDecompress.LZMA_Decompress(data);
 			time = /*System.currentTimeMillis()*/SystemClock.uptimeMillis() - time;
-			int size = outData.length;
+			int size = 0;
 			/*
 			ByteArrayInputStream inStream = new ByteArrayInputStream(data);
 			ByteArrayOutputStream outStream = new ByteArrayOutputStream(BLOCK_DATA_SIZE);			
