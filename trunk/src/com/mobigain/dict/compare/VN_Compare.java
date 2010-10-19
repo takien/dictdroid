@@ -2,7 +2,7 @@ package com.mobigain.dict.compare;
 
 public class VN_Compare
 {
-	char[] V_ALPHABET = 
+	short[] V_ALPHABET = 
 	{
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 		'a',  
@@ -27,7 +27,7 @@ public class VN_Compare
 		'z'
 	};
 	
-	char[] UV_ALPHABET = 
+	short[] UV_ALPHABET = 
 	{
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 		'A',  
@@ -51,7 +51,7 @@ public class VN_Compare
 		221, 7922, 7926, 7928, 7924,
 		'Z'
 	};
-	char[] HV_ALPHABET = null; 
+	short[] HV_ALPHABET = null; 
 	public VN_Compare()
 	{	
 		int len = 0;
@@ -61,20 +61,20 @@ public class VN_Compare
 			len = Math.max(UV_ALPHABET[i], len);
 		}
 	
-		HV_ALPHABET = new char[len + 1];
+		HV_ALPHABET = new short[len + 1];
 		for (int i = 0; i < HV_ALPHABET.length; ++i) 
 		{
-			HV_ALPHABET[i] = (char)-1;
+			HV_ALPHABET[i] = (short)-1;
 		}
 	
 		for (int i = 0; i < V_ALPHABET.length; ++i) 
 		{
-			HV_ALPHABET[V_ALPHABET[i]] = (char)i;
+			HV_ALPHABET[V_ALPHABET[i]] = (short)i;
 		}
 	
 		for (int i = 0; i < V_ALPHABET.length; ++i) 
 		{
-			HV_ALPHABET[UV_ALPHABET[i]] = (char)i;
+			HV_ALPHABET[UV_ALPHABET[i]] = (short)i;
 		}
 	}
 	
@@ -112,7 +112,7 @@ public class VN_Compare
 			char c = s.charAt(i);
 			if (c < HV_ALPHABET.length)
 			{
-				char str = HV_ALPHABET[c];
+				short str = HV_ALPHABET[c];
 				if (str == -1)
 				{
 					sb.append(c);

@@ -1,7 +1,7 @@
 package com.mobigain.dict.compare;
 public class EN_Compare
 {
-	 char[] accented = 
+	 short[] accented = 
 		{
 			228, 196, 229, 197, 225, 193, 224, 192, 226, 
 			194, 233, 201, 232, 200, 234, 202, 235, 203, 
@@ -11,7 +11,7 @@ public class EN_Compare
 			199
 		};
 	
-	char[] unaccented = 
+	short[] unaccented = 
 		{
 			97, 65, 97, 65, 97, 65, 97, 65, 97,
 			65, 101, 69, 101, 69, 101, 69, 101,	69, 
@@ -21,7 +21,7 @@ public class EN_Compare
 			67
 		};
 	
-	char[] accentedH = null;
+	short[] accentedH = null;
 
 
 	public EN_Compare()
@@ -32,13 +32,13 @@ public class EN_Compare
 		{
 			len = Math.max(accented[i], len);
 		}
-		accentedH = new char[len + 1];	
+		accentedH = new short[len + 1];	
 		
 		for(int i = 0; i < accentedH.length; i++)
-			accentedH[i] = (char)-1;
+			accentedH[i] = (short)-1;
 	
 		for(int i = 0; i < accented.length; i++)
-			accentedH[accented[i]] = (char)i;
+			accentedH[accented[i]] = (short)i;
 	}
 	
 	private String getComparableKey(String key)
@@ -76,7 +76,7 @@ public class EN_Compare
 			char c = s.charAt(i);
 			if (((c == ' ') || Character.isLetterOrDigit(c)) && (c < accentedH.length))
 			{
-				char str = accentedH[c];
+				short str = accentedH[c];
 				if (str == -1)
 				{
 					sb.append(c);				

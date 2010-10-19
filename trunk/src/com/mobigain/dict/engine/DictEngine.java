@@ -16,17 +16,21 @@ import SevenZip.Compression.LZMA.*;
 
 public class DictEngine
 {
-	public static int SIZEOF_BLOCK_INFO = 8;
-	public static int SIZEOF_DIC_HEADER = 64;
-	public static int SIZEOF_WORD_ITEM = 4;
+	final static int ENGLISH_COMAPRE = 0;
+	final static int VIETNAMESE_COMPARE = 1;
+	final static int KOREAN_COMPARE = 2;
 	
-	public static int WORD_LENGTH = 256;
-	public static int WORD_SIZE = 2*WORD_LENGTH;
+	final static int SIZEOF_BLOCK_INFO = 8;
+	final static int SIZEOF_DIC_HEADER = 64;
+	final static int SIZEOF_WORD_ITEM = 4;
 	
-	public static int BLOCK_INDEX_SIZE = 15000;
-	public static int DICT_BLOCK_SIZE = 50000;
-	public static int MAX_MEAN_SIZE = 10000;
-	public static int BLOCK_DATA_SIZE = DICT_BLOCK_SIZE + MAX_MEAN_SIZE;	
+	final static int WORD_LENGTH = 256;
+	final static int WORD_SIZE = 2*WORD_LENGTH;
+	
+	final static int BLOCK_INDEX_SIZE = 15000;
+	final static int DICT_BLOCK_SIZE = 50000;
+	final static int MAX_MEAN_SIZE = 10000;
+	final static int BLOCK_DATA_SIZE = DICT_BLOCK_SIZE + MAX_MEAN_SIZE;	
 	
 	EN_Compare en_compare = new EN_Compare();	
 	KR_Compare kr_compare = new KR_Compare();
@@ -34,15 +38,19 @@ public class DictEngine
 	
 	BLOCK_INFO[] dataBlockInfo = null;
 	
-	private byte[] dataBlock = new byte[BLOCK_DATA_SIZE];
-	private byte[] indexData = new byte[BLOCK_DATA_SIZE];
-	private byte[] meaning = new byte[MAX_MEAN_SIZE];
+	byte[] dataBlock = new byte[BLOCK_DATA_SIZE];
+	byte[] indexData = new byte[BLOCK_DATA_SIZE];
+	byte[] meaning = new byte[MAX_MEAN_SIZE];
 	
-	private int totalWord;
-	private int numblockInDic;
-	private int numWordInDic;
-	private int indexInBlock;
-	private int currentblockID;
+	int totalWord;
+	int numblockInDic;
+	int numWordInDic;
+	int indexInBlock;
+	int currentblockID;
+	int compareType;
+	int indexWordNum;
+	int lastblockID;
+	int dataWordNum;
 	
 	RandomAccessFile fDic = null;	
 	
@@ -97,8 +105,17 @@ public class DictEngine
 				dataBlockInfo[i].numWord = ShortC2Java(fDic.readShort());
 			}
 			
+			indexInBlock = 0;
+			currentblockID = 1;
+			
+			compareType = ENGLISH_COMAPRE;
+			indexWordNum = dataBlockInfo[0].numWord;
+			lastblockID = 1;
+			
 			ReadDataAtBlock(indexData, 0);
 			ReadDataAtBlock(dataBlock, 1);
+			
+			OnEditSearch("hello");
 		}
 		catch (Exception ex)
 		{
@@ -110,12 +127,6 @@ public class DictEngine
 	public int GetNumWordInDic()
 	{
 		return numWordInDic;
-	}
-	
-	public void OnEditSearch(String editText)
-	{
-		
-		
 	}
 	
 	private String GetIndexData(int numEntry)
@@ -136,7 +147,7 @@ public class DictEngine
 			//UTF-16LE 	Sixteen-bit UCS Transformation Format, little-endian byte order
 			//UTF-16 	Sixteen-bit UCS Transformation Format, byte order identified by an optional byte-order mark
 			
-			String wordString = new String(indexData, wordItem.pos, wordItem.len, "UTF-16BE");
+			String wordString = new String(indexData, wordItem.pos, wordItem.len, "UTF-16LE");
 			
 			dataInputStream.close();
 			byteArrayInputStream.close();
@@ -162,7 +173,7 @@ public class DictEngine
 			
 			byte wordSize = dataBlock[wordItem.pos];
 			
-			String wordString = new String(dataBlock, wordItem.pos + 1, wordSize, "UTF-16BE");
+			String wordString = new String(dataBlock, wordItem.pos + 1, wordSize, "UTF-16LE");
 			
 			dataInputStream.close();
 			byteArrayInputStream.close();
@@ -182,7 +193,20 @@ public class DictEngine
 	
 	private int CompareString(String text1, String text2)
 	{
-		return 0;
+		switch (compareType)
+		{
+			case ENGLISH_COMAPRE:
+				return en_compare.compare(text1, text2);
+
+			case VIETNAMESE_COMPARE:
+				return vn_compare.compare(text1, text2);
+				
+			case KOREAN_COMPARE:
+				return kr_compare.compare(text1, text2);
+			
+			default:
+				return 0;
+		}
 	}
 	
 	public int NumWordInDict()
@@ -214,24 +238,21 @@ public class DictEngine
 	}
 	
 	int OnEditSearch(String editText)
-	{
+	{		
 		int l1 = 1;
 		int l2 = indexWordNum;
 		int maxBlock = l2;
-		int l3;
+		int l3 = 0;
 		int lCmp;
-
-		short * editTextPtr = (short*)editText->GetPointer();
-		int editTextPtrLength = editText->GetLength();
+		String word = null;
 		while (l2>=l1)
 		{
 			l3 = (l1 + l2)/2;
 			if (l3 == maxBlock)
-				break;
-			memset(word, 0, WORD_SIZE);
-			GetIndexData(l3, word);
-			lCmp = CompareString((const unsigned short*) editTextPtr, editTextPtrLength,
-								  (const unsigned short*)word, word_size);
+				break;			
+			
+			word = GetIndexData(l3);
+			lCmp = CompareString(editText, word);
 			if (lCmp == 0)
 				break;
 			else if (lCmp<0)
@@ -246,9 +267,8 @@ public class DictEngine
 			l3 = l2 + 1;
 
 		currentblockID = l3;
-		//ReadDataAtBlock(dataBlock1, currentblockID);
 		lastblockID = l3;
-		ReadDataAtBlock(data_BB_Block, currentblockID);
+		ReadDataAtBlock(dataBlock, currentblockID);
 
 		l1 = 0;
 		l2 = dataBlockInfo[currentblockID].numWord - 1;
@@ -257,11 +277,9 @@ public class DictEngine
 		while (l2>=l1)
 		{
 			l3 = (l1 + l2)/2;
-			memset(word, 0, WORD_SIZE);
-
-			GetWordData(l3, word);
-			lCmp = CompareString((const unsigned short*) editTextPtr, editTextPtrLength,
-										  (const unsigned short*)word, word_size);
+			
+			word = GetWordData(l3);
+			lCmp = CompareString(editText, word);
 			if (lCmp == 0)
 				break;
 			else if (lCmp<0)
@@ -275,19 +293,22 @@ public class DictEngine
 		if (l3 > l2)
 			l3 = l2 + 1;
 
-		indexInBlock = l3;
-		/* ko can thiet
-		listCurSel = 0;
-		if (indexInBlock > dataWordNum - NUM_WORD_INLIST)
+		indexInBlock = l3;		
+		return GetWordIndex();		
+	}
+
+
+	int GetWordIndex()
+	{
+		int wordIndex = 0;
+		int i = 1;
+		while (i < currentblockID)
 		{
-			int nextBlock = currentblockID + 1;
-			if (nextBlock>= numblockInDic)
-				nextBlock = 1;
-			ReadDataAtBlock(dataBlock2, nextBlock);
+			wordIndex += dataBlockInfo[i].numWord;
+			i++;
 		}
-		GetWordList();
-		*/
-		return GetWordIndex();
+		wordIndex = wordIndex + indexInBlock;
+		return wordIndex;
 	}
 }
 	/*
