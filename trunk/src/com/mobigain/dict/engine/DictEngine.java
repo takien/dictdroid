@@ -2,6 +2,7 @@ package com.mobigain.dict.engine;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,6 +16,10 @@ import SevenZip.Compression.LZMA.*;
 
 public class DictEngine
 {
+	public static int SIZEOF_BLOCK_INFO = 8;
+	public static int SIZEOF_DIC_HEADER = 64;
+	public static int SIZEOF_WORD_ITEM = 4;
+	
 	public static int WORD_LENGTH = 256;
 	public static int WORD_SIZE = 2*WORD_LENGTH;
 	
@@ -35,6 +40,7 @@ public class DictEngine
 	
 	private int totalWord;
 	private int numblockInDic;
+	private int numWordInDic;
 	private int indexInBlock;
 	private int currentblockID;
 	
@@ -79,6 +85,7 @@ public class DictEngine
 			
 			fDic.read(dicHeader.bRes, 0, 56);
 			
+			numWordInDic = dicHeader.numEntry;
 			numblockInDic = dicHeader.numBlock;
 			dataBlockInfo = new BLOCK_INFO[numblockInDic];
 			
@@ -100,14 +107,73 @@ public class DictEngine
 		}
 	}
 	
+	public int GetNumWordInDic()
+	{
+		return numWordInDic;
+	}
+	
 	public void OnEditSearch(String editText)
 	{
 		
+		
 	}
 	
-	public String GetWord(int index)
+	private String GetIndexData(int numEntry)
 	{
-		return null;
+		try
+		{
+			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(indexData, numEntry*SIZEOF_WORD_ITEM, SIZEOF_WORD_ITEM);
+			DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
+			
+			WORD_ITEM wordItem = new WORD_ITEM();
+			wordItem.pos =  ShortC2Java(dataInputStream.readShort());
+			wordItem.len =  ShortC2Java(dataInputStream.readShort());
+			
+			//US-ASCII  	Seven-bit ASCII, a.k.a. ISO646-US, a.k.a. the Basic Latin block of the Unicode character set
+			//ISO-8859-1   	ISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1
+			//UTF-8 	Eight-bit UCS Transformation Format
+			//UTF-16BE 	Sixteen-bit UCS Transformation Format, big-endian byte order
+			//UTF-16LE 	Sixteen-bit UCS Transformation Format, little-endian byte order
+			//UTF-16 	Sixteen-bit UCS Transformation Format, byte order identified by an optional byte-order mark
+			
+			String wordString = new String(indexData, wordItem.pos, wordItem.len, "UTF-16BE");
+			
+			dataInputStream.close();
+			byteArrayInputStream.close();
+			
+			return wordString;
+		}
+		catch (Exception ex)
+		{
+			return null;
+		}
+	}
+	
+	private String GetWordData(int numEntry)
+	{
+		try
+		{
+			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(dataBlock, numEntry*SIZEOF_WORD_ITEM, SIZEOF_WORD_ITEM);
+			DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
+			
+			WORD_ITEM wordItem = new WORD_ITEM();
+			wordItem.pos =  ShortC2Java(dataInputStream.readShort());
+			wordItem.len =  ShortC2Java(dataInputStream.readShort());
+			
+			byte wordSize = dataBlock[wordItem.pos];
+			
+			String wordString = new String(dataBlock, wordItem.pos + 1, wordSize, "UTF-16BE");
+			
+			dataInputStream.close();
+			byteArrayInputStream.close();
+			
+			return wordString;
+			
+		}
+		catch (Exception ex)
+		{
+			return null;
+		}
 	}
 	public String GetMeanWord(int index)
 	{
@@ -135,55 +201,93 @@ public class DictEngine
 			fDic.seek(posInFile);
 			fDic.read(data, 0, dataSize);
 			
-			long time = SystemClock.uptimeMillis();//System.currentTimeMillis();
+			//long time = System.currentTimeMillis();
 			DecoderLzma(data, dataSize, blockData, BLOCK_DATA_SIZE);
-			//byte[] outData = LzmaDecompress.LZMA_Decompress(data);
-			time = /*System.currentTimeMillis()*/SystemClock.uptimeMillis() - time;
-			int size = 0;
-			/*
-			ByteArrayInputStream inStream = new ByteArrayInputStream(data);
-			ByteArrayOutputStream outStream = new ByteArrayOutputStream(BLOCK_DATA_SIZE);			
-			
-
-			Decoder decoder = new Decoder();			
-			
-			byte[] properties = new byte[5];
-			if (inStream.read(properties, 0, 5) != 5)			
-			{
-				throw new IOException("input data is too short");
-			}
-			
-			decoder.SetDecoderProperties(properties);
-			
-			long outSize = 0;
-			for (int i = 0; i < 8; i++)
-			{
-				int v = inStream.read();
-				if (v < 0)
-				{
-					throw new IOException("Can't read stream size");
-				}
-				outSize |= ((long)v) << (8 * i);
-			}
-			
-			long time = System.currentTimeMillis();
-			if (!decoder.Code(inStream, outStream, outSize))
-			{
-				throw new IOException("Error in data stream");
-			}
-			
-			time = System.currentTimeMillis() - time;
-			outStream.close();
-			inStream.close();
-			*/
+			//time = SystemClock.uptimeMillis() - time;
+			//int size = 0;
 		}
 		catch (Exception ex)
 		{
 			String exStr = ex.getMessage();
 			int a = 0;			
 		}
-		
-		
+	}
+	
+	int OnEditSearch(String editText)
+	{
+		int l1 = 1;
+		int l2 = indexWordNum;
+		int maxBlock = l2;
+		int l3;
+		int lCmp;
+
+		short * editTextPtr = (short*)editText->GetPointer();
+		int editTextPtrLength = editText->GetLength();
+		while (l2>=l1)
+		{
+			l3 = (l1 + l2)/2;
+			if (l3 == maxBlock)
+				break;
+			memset(word, 0, WORD_SIZE);
+			GetIndexData(l3, word);
+			lCmp = CompareString((const unsigned short*) editTextPtr, editTextPtrLength,
+								  (const unsigned short*)word, word_size);
+			if (lCmp == 0)
+				break;
+			else if (lCmp<0)
+				l2 = l3 - 1;
+			else
+				l1 = l3 + 1;
+		}
+
+		if (l1 > l2)
+			l3++;
+		if (l3 > l2)
+			l3 = l2 + 1;
+
+		currentblockID = l3;
+		//ReadDataAtBlock(dataBlock1, currentblockID);
+		lastblockID = l3;
+		ReadDataAtBlock(data_BB_Block, currentblockID);
+
+		l1 = 0;
+		l2 = dataBlockInfo[currentblockID].numWord - 1;
+		dataWordNum = l2;
+
+		while (l2>=l1)
+		{
+			l3 = (l1 + l2)/2;
+			memset(word, 0, WORD_SIZE);
+
+			GetWordData(l3, word);
+			lCmp = CompareString((const unsigned short*) editTextPtr, editTextPtrLength,
+										  (const unsigned short*)word, word_size);
+			if (lCmp == 0)
+				break;
+			else if (lCmp<0)
+				l2 = l3 - 1;
+			else
+				l1 = l3 + 1;
+		}
+
+		if (l1 > l2)
+			l3++;
+		if (l3 > l2)
+			l3 = l2 + 1;
+
+		indexInBlock = l3;
+		/* ko can thiet
+		listCurSel = 0;
+		if (indexInBlock > dataWordNum - NUM_WORD_INLIST)
+		{
+			int nextBlock = currentblockID + 1;
+			if (nextBlock>= numblockInDic)
+				nextBlock = 1;
+			ReadDataAtBlock(dataBlock2, nextBlock);
+		}
+		GetWordList();
+		*/
+		return GetWordIndex();
 	}
 }
 	/*
