@@ -63,9 +63,15 @@ public class DictEngine
 	}
 	
 	// 2-byte number
+	/*
 	static short ShortC2Java(int i)
 	{
 	    return (short)(((i>>8)&0xff)|((i << 8)&0xff00));
+	}
+	*/
+	static char ShortC2Java(int i)
+	{
+	    return (char)(((i>>8)&0xff)|((i << 8)&0xff00));
 	}
 
 	// 4-byte number
@@ -222,7 +228,7 @@ public class DictEngine
 				}
 				catch (Exception ex)
 				{
-					
+					String exStr = ex.getMessage();
 				}
 				
 				break;
