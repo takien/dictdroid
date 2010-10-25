@@ -115,7 +115,7 @@ public class DictEngine
 			ReadDataAtBlock(indexData, 0);
 			ReadDataAtBlock(dataBlock, 1);
 			
-			OnEditSearch("hello");
+			//OnEditSearch("hello");
 		}
 		catch (Exception ex)
 		{
@@ -185,6 +185,51 @@ public class DictEngine
 		{
 			return null;
 		}
+	}
+	
+	public String GetWord(int index)
+	{
+		int wordNum = 0;
+		int i = 1;
+		String word = "NULL";
+		while (i < numblockInDic)
+		{
+			wordNum += dataBlockInfo[i].numWord;
+			if(wordNum > index)
+			{				
+				int wordID = (dataBlockInfo[i].numWord) - (wordNum - index);
+
+				if(lastblockID != i)
+				{
+					lastblockID = i;
+					ReadDataAtBlock(dataBlock, i);
+				}
+				
+				try
+				{
+					ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(dataBlock, wordID*SIZEOF_WORD_ITEM, SIZEOF_WORD_ITEM);
+					DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
+					
+					WORD_ITEM wordItem = new WORD_ITEM();
+					wordItem.pos =  ShortC2Java(dataInputStream.readShort());
+					wordItem.len =  ShortC2Java(dataInputStream.readShort());
+					
+					byte wordSize = dataBlock[wordItem.pos];
+					word = new String(dataBlock, wordItem.pos + 1, wordSize, "UTF-16LE");
+	
+					dataInputStream.close();
+					byteArrayInputStream.close();
+				}
+				catch (Exception ex)
+				{
+					
+				}
+				
+				break;
+			}
+			i++;
+		}
+		return word;
 	}
 	public String GetMeanWord(int index)
 	{
@@ -310,6 +355,7 @@ public class DictEngine
 		wordIndex = wordIndex + indexInBlock;
 		return wordIndex;
 	}
+	
 }
 	/*
 class DictEngine {
