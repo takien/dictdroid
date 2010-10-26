@@ -7,10 +7,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -112,6 +116,8 @@ public class MainSearch extends Activity {
         }
     }
     private ListView _listViewWord;
+    private EditText _editText;
+    private DictEngine _dictEngine;
 
     /** Called when the activity is first created. */
     @Override
@@ -119,10 +125,30 @@ public class MainSearch extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        DictEngine dictEngine = new DictEngine();
-        dictEngine.OpenDict("/sdcard/envn.mdo");
+        _dictEngine = new DictEngine();
+        _dictEngine.OpenDict("/sdcard/envn.mdo");
         
+        _editText = (EditText)findViewById(R.id.searchWord);
+        _editText.addTextChangedListener(new TextWatcher() 
+        {
+            public void  afterTextChanged (Editable s)
+            {
+                //Log.d("seachScreen", "afterTextChanged");
+                //Log.d("seachScreen", s.toString());
+            	String wordEdit = s.toString();
+            	int pos = _dictEngine.OnEditSearch(wordEdit);
+            	_listViewWord.setSelection(pos);
+            }
+            public void  beforeTextChanged  (CharSequence s, int start, int count, int after)
+            {
+                //Log.d("seachScreen", "beforeTextChanged");
+            }
+            public void  onTextChanged  (CharSequence s, int start, int before, int count) 
+            {
+                //Log.d("seachScreen", "onTextChanged");
+            } 
+        });
         _listViewWord = (ListView)findViewById(R.id.listWord);
-        _listViewWord.setAdapter(new WordEfficientAdapter(this, dictEngine));
+        _listViewWord.setAdapter(new WordEfficientAdapter(this, _dictEngine));
     }
 }

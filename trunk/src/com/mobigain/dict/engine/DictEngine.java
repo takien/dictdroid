@@ -288,7 +288,7 @@ public class DictEngine
 		}
 	}
 	
-	int OnEditSearch(String editText)
+	public int OnEditSearch(String editText)
 	{		
 		int l1 = 1;
 		int l2 = indexWordNum;
