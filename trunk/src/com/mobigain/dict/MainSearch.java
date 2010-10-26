@@ -1,9 +1,12 @@
 package com.mobigain.dict;
 
 import com.mobigain.dict.engine.DictEngine;
+import com.mobigain.util.FileUtil;
+import com.mobigain.util.HtmlConverter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -13,11 +16,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class MainSearch extends Activity {
     /* load our native library */
@@ -148,7 +154,20 @@ public class MainSearch extends Activity {
                 //Log.d("seachScreen", "onTextChanged");
             } 
         });
+        
         _listViewWord = (ListView)findViewById(R.id.listWord);
         _listViewWord.setAdapter(new WordEfficientAdapter(this, _dictEngine));
+        _listViewWord.setOnItemClickListener(new OnItemClickListener() 
+        {			
+			public void onItemClick(AdapterView arg0, View view, int position, long id) 
+			{
+				String wordMean = HtmlConverter.String_htmlEncode(_dictEngine.GetMeanWord(position));
+				FileUtil.WriteFile("/sdcard/mean.html", wordMean);
+				Intent mainViewIntent = new Intent(MainSearch.this, WordMeanView.class);
+	        	startActivity(mainViewIntent);	
+			}
+        });
+
+        
     }
 }

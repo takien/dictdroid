@@ -27,9 +27,9 @@ public class UrlDownloader
 				   File file = new File(pathFile);
 
 				   long startTime = System.currentTimeMillis();
-				   Log.d("ImageManager", "download begining");
-				   Log.d("ImageManager", "download url:" + url);
-				   Log.d("ImageManager", "downloaded file name:" + pathFile);
+				   Log.d("UrlDownloader - DownloadFromUrl", "download begining");
+				   Log.d("UrlDownloader - DownloadFromUrl", "download url:" + url);
+				   Log.d("UrlDownloader - DownloadFromUrl", "downloaded file name:" + pathFile);
 
 				   /* Open a connection to that URL. */
 				   URLConnection ucon = url.openConnection();
@@ -71,13 +71,13 @@ public class UrlDownloader
 				   fos.write(baf.toByteArray());
 				   fos.close();
 
-				   Log.d("ImageManager", "download ready in"
+				   Log.d("UrlDownloader - DownloadFromUrl", "download ready in"
 								   + ((System.currentTimeMillis() - startTime) / 1000)
 								   + " sec");
 		   } 
 		   catch (IOException e) 
 		   {
-				   Log.d("ImageManager", "Error: " + e);
+				   Log.d("UrlDownloader - DownloadFromUrl", "Error: " + e);
 		   }
 	}
 

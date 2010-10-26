@@ -10,6 +10,7 @@ import java.io.RandomAccessFile;
 
 import android.graphics.Bitmap;
 import android.os.SystemClock;
+import android.util.Log;
 
 import com.mobigain.dict.compare.*;
 import SevenZip.Compression.LZMA.*;
@@ -120,13 +121,10 @@ public class DictEngine
 			
 			ReadDataAtBlock(indexData, 0);
 			ReadDataAtBlock(dataBlock, 1);
-			
-			//OnEditSearch("hello");
 		}
 		catch (Exception ex)
 		{
-			String exStr = ex.getMessage();
-			int a = 0;
+			Log.d("DictEngine - OpenDict", ex.getMessage());
 		}
 	}
 	
@@ -162,6 +160,7 @@ public class DictEngine
 		}
 		catch (Exception ex)
 		{
+			Log.d("DictEngine - GetIndexData", ex.getMessage());
 			return null;
 		}
 	}
@@ -189,6 +188,7 @@ public class DictEngine
 		}
 		catch (Exception ex)
 		{
+			Log.d("DictEngine - GetWordData", ex.getMessage());
 			return null;
 		}
 	}
@@ -227,8 +227,8 @@ public class DictEngine
 					byteArrayInputStream.close();
 				}
 				catch (Exception ex)
-				{
-					String exStr = ex.getMessage();
+				{					
+					Log.d("DictEngine - GetWord", ex.getMessage());
 				}
 				
 				break;
@@ -237,8 +237,55 @@ public class DictEngine
 		}
 		return word;
 	}
+	
+	private String GetMeanData(int numEntry)
+	{
+		try
+		{
+			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(dataBlock, numEntry*SIZEOF_WORD_ITEM, SIZEOF_WORD_ITEM);
+			DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
+			
+			WORD_ITEM wordItem = new WORD_ITEM();
+			wordItem.pos =  ShortC2Java(dataInputStream.readShort());
+			wordItem.len =  ShortC2Java(dataInputStream.readShort());
+			
+			byte wordSize = dataBlock[wordItem.pos];
+			int sizeMean = (wordItem.len - wordSize - 1);
+			
+			//String meanString = new String(dataBlock, wordItem.pos + 1 + wordSize, sizeMean, "UTF-16LE");
+			String meanString = new String(dataBlock, wordItem.pos + 1 + wordSize, sizeMean, "UTF-8");
+						
+			dataInputStream.close();
+			byteArrayInputStream.close();
+			
+			return meanString;			
+		}
+		catch (Exception ex)
+		{
+			Log.d("DictEngine - GetMeanData", ex.getMessage());
+			return null;
+		}
+	}
 	public String GetMeanWord(int index)
 	{
+		int wordNum = 0;
+		int i = 1;
+		while (i < numblockInDic)
+		{
+			wordNum += dataBlockInfo[i].numWord;
+			if(wordNum > index)
+			{
+				int wordID = (dataBlockInfo[i].numWord) - (wordNum - index);
+
+				if(lastblockID != i)
+				{
+					lastblockID = i;
+					ReadDataAtBlock(dataBlock, i);
+				}				
+				return GetMeanData(wordID);
+			}
+			i++;
+		}
 		return null;
 	}
 	
@@ -283,8 +330,7 @@ public class DictEngine
 		}
 		catch (Exception ex)
 		{
-			String exStr = ex.getMessage();
-			int a = 0;			
+			Log.d("DictEngine - ReadDataAtBlock", ex.getMessage());						
 		}
 	}
 	

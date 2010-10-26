@@ -17,19 +17,22 @@ public class WordMeanView extends Activity
 		
 		WebView web = (WebView) findViewById(R.id.wordmean);
         web.getSettings().setJavaScriptEnabled(true);
-        
+        /*
         web.getSettings().setJavaScriptCanOpenWindowsAutomatically(false);
         web.getSettings().setPluginsEnabled(false);
         web.getSettings().setSupportMultipleWindows(false);
         web.getSettings().setSupportZoom(false);
         web.setVerticalScrollBarEnabled(false);
         web.setHorizontalScrollBarEnabled(false);
- 		
+ 		*/
         //Our application's main page will be loaded
-        web.loadUrl("http://www.vnexpress.net");	 
+        web.loadUrl("file://sdcard/mean.html");	 
+        //web.loadUrl("http://www.google.com");
         
-        web.setWebViewClient(new WebViewClient() {
-            @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        web.setWebViewClient(new WebViewClient() 
+        {
+            @Override public boolean shouldOverrideUrlLoading(WebView view, String url) 
+            {
                 return false;
             }
         });
