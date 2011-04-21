@@ -1,0 +1,22 @@
+Albanian
+Armenian
+Azeri=Azerbaijani ??
+Bosnian
+Bulgarian
+Croatian
+Czech
+Danish
+Estonian
+Finnish
+Hungarian
+Latin
+Latvian
+Lithuanian
+Polish
+Romanian
+Serbian
+Slovak
+Slovenian
+Tatar
+Turkish
+Yiddish
