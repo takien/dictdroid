@@ -1,3 +1,21 @@
+Arabic(AR)\
+Dutch(NL\
+French(FR)\
+German(DE)\
+Greek(EL)\
+Hebrew(IW)\
+Indonesian(ID)\
+Italian(IT)\
+Korean(KO)\
+Norwegian(NO)\
+Persian(FA)\
+Portuguese(PT)\
+Russian(RU)\
+Spanish(ES)\
+Swedish(SV)\
+Turkish(TR)\
+Ukrainian(UK)\
+Vietnamese(VI)\
 Albanian
 Armenian
 Azeri=Azerbaijani ??
@@ -20,6 +38,7 @@ Slovenian
 Tatar
 Turkish
 Yiddish
+/////////////////////////////////////////
 
 English-Albanian
 http://downloads.lingvosoft.com/products/download/eval/lingvosoft-dictionary-wind-engalb-nt.exe
