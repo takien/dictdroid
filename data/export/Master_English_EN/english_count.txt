@@ -1,0 +1,14 @@
+English-French: 141602 words
+French-English: 81647 words
+
+English-German: 140347 words
+German-English: 160710 words
+
+English-Italian: 134176 words
+Italian-English: 70814 words
+
+English-Spanish: 126890 words
+Spanish-English: 79775 words
+
+English-Vietnamese: 103835 words
+Vietnamese-English: 23532 words
