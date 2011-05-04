@@ -3,4 +3,4 @@ English-French DictDroid is "offline dictionary" (doesn't require internet conne
 - English-French dictionary: 141602 words with pronunciation.
 - French-English dictionary: 81647 words with pronunciation.
 - View history and favorite words.
-- Support Google Translate (require internet connection).
+- Support Google Translate (requiring internet connection).
