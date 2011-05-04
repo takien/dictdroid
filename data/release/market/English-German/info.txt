@@ -1,0 +1,6 @@
+English-German DictDroid is "offline dictionary" (doesn't require internet connection) with features:
+- Easy to use with simple interface.
+- English-German dictionary: 140347 words with pronunciation.
+- German-English dictionary: 160710 words with pronunciation.
+- View history and favorite words.
+- Support Google Translate (require internet connection).
