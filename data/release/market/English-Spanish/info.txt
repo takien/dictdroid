@@ -3,4 +3,4 @@ English-Spanish DictDroid is "offline dictionary" (doesn't require internet conn
 - English-Spanish dictionary: 126890 words with pronunciation.
 - Spanish-English dictionary: 79775 words with pronunciation.
 - View history and favorite words.
-- Support Google Translate (require internet connection).
+- Support Google Translate (requiring internet connection).
