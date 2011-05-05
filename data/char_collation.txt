@@ -17,26 +17,25 @@ Turkish(TR)\
 Ukrainian(UK)\
 Vietnamese(VI)\
 Albanian
-Armenian
-Azeri=Azerbaijani ??
+Armenian ok
+Azeri=Azerbaijani ?? ok
 Bosnian
 Bulgarian
 Croatian
-Czech
+Czech ok
 Danish
-Estonian
-Finnish
+Estonian ok
+Finnish ok
 Hungarian
-Latin
-Latvian
+Latin ok
+Latvian ok
 Lithuanian
-Polish
-Romanian
-Serbian
+Polish ok
+Romanian ok
+Serbian ok
 Slovak
-Slovenian
-Tatar
-Turkish
+Slovenian ok
+Tatar ok
 Yiddish
 /////////////////////////////////////////
 
