@@ -27,7 +27,7 @@ Danish
 Estonian ok
 Finnish ok
 Hungarian
-Latin ok
+Latin ok ------------------------
 Latvian ok
 Lithuanian
 Polish ok
