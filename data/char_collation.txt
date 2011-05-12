@@ -1,14 +1,14 @@
-Arabic(AR)\
+Arabic(AR)\ nf
 Dutch(NL\
 French(FR)\
 German(DE)\
 Greek(EL)\
-Hebrew(IW)\
+Hebrew(IW)\ nf
 Indonesian(ID)\
 Italian(IT)\
 Korean(KO)\
 Norwegian(NO)\
-Persian(FA)\
+Persian(FA)\ nf
 Portuguese(PT)\
 Russian(RU)\
 Spanish(ES)\
@@ -25,9 +25,9 @@ Croatian
 Czech ok
 Danish
 Estonian ok
-Finnish ok
+Finnish ok 
 Hungarian
-Latin ok ------------------------
+Latin ok nf
 Latvian ok
 Lithuanian
 Polish ok
@@ -35,7 +35,7 @@ Romanian ok
 Serbian ok
 Slovak
 Slovenian ok
-Tatar ok
+Tatar ok	nf
 Yiddish
 /////////////////////////////////////////
 
