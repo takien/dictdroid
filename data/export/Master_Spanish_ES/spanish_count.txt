@@ -1,0 +1,2 @@
+Spanish-Russian: 75642 words
+Russian-Spanish: 60549 words
