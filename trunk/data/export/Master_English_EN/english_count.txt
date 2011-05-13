@@ -1,14 +1,53 @@
+English-Arabic: 45765 words
+Arabic-English: 63183 words
+
+English-Dutch: 129986 words
+Dutch-English: 63085 words
+ 
 English-French: 141602 words
 French-English: 81647 words
 
 English-German: 140347 words
 German-English: 160710 words
 
+English-Greek: 50428 words
+Greek-English: 52047 words
+
+English-Hebrew: 138896 words
+Hebrew-English: 87588 words
+
+English-Indonesian: 115780 words
+Indonesian-English: 63272 words
+
 English-Italian: 134176 words
 Italian-English: 70814 words
 
+English-Korean: 62947 words
+Korean-English: 92753 words
+
+English-Norwegian: 12395 words
+Norwegian-English: 13653 words
+
+English-Persian: 50259 words
+Persian-English: 91569 words
+
+English-Portuguese: 136461 words
+Portuguese-English: 55804 words
+
+English-Russian: 92393 words
+Russian-English: 86610 words
+
 English-Spanish: 126890 words
 Spanish-English: 79775 words
+
+English-Swedish: 104525 words
+Swedish-English: 23400 words
+
+English-Turkish: 73730 words
+Turkish-English: 93906 words
+
+English-Ukrainian: 44271 words
+Ukrainian-English: 55904 words
 
 English-Vietnamese: 103835 words
 Vietnamese-English: 23532 words
