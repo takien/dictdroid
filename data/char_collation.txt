@@ -16,27 +16,27 @@ Swedish(SV)\
 Turkish(TR)\
 Ukrainian(UK)\
 Vietnamese(VI)\
-Albanian
-Armenian ok
+Albanian		ok
+Armenian 		ok
 Azeri=Azerbaijani ?? ok
-Bosnian
-Bulgarian
-Croatian
-Czech ok
-Danish
-Estonian ok
-Finnish ok 
-Hungarian
-Latin ok nf
-Latvian ok
-Lithuanian
-Polish ok
-Romanian ok
-Serbian ok
-Slovak
-Slovenian ok
-Tatar ok	nf
-Yiddish
+Bosnian			ok
+Bulgarian		ok
+Croatian		ok
+Czech 			ok
+Danish 			ok
+Estonian 		ok
+Finnish 		ok 
+Hungarian		----------------------
+Latin 			ok nf
+Latvian 		ok
+Lithuanian		----------------------
+Polish 			ok
+Romanian 		ok
+Serbian 		ok
+Slovak			ok
+Slovenian 		ok
+Tatar 			ok	nf
+Yiddish			----------------------
 /////////////////////////////////////////
 
 English-Albanian
