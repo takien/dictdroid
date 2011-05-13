@@ -1,0 +1,14 @@
+Arabic-Russian: 9968 words
+Russian-Arabic: 11470 words
+
+Indonesian-Korean: 60695 words
+Korean-Indonesian: 45866 words
+
+Russian-Turkish: 35813 words
+Turkish-Russian: 39028 words
+
+Russian-Ukrainian: 57278 words
+Ukrainian-Russian: 55549 words
+
+Russian-Vietnamese: 38039 words
+Vietnamese-Russian: 35736 words
