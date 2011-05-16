@@ -143,4 +143,13 @@ Spanish-
 Spanish-
 
 
+CompareBulgarian.java
+CompareCroatian.java
+CompareCzech.java
+CompareDanish.java
+CompareHungarian.java
+CompareLithuanian.java
+ComparePolish.java
+CompareSlovak.java
+CompareYiddish.java
 
