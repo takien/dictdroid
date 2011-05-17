@@ -1,66 +1,65 @@
-English-Arabic
-English-Dutch
-English-French
-English-German
-English-Greek
-English-Hebrew
-English-Indonesian
-English-Italian
-English-Korean
-English-Norwegian
-English-Persian
-English-Portuguese
-English-Russian
-English-Spanish
-English-Swedish
-English-Turkish
-English-Ukrainian
-English-Vietnamese
-English-Albanian
-English-Armenian
-English-Azerbaijani
-English-Bosnian
-English-Bulgarian
-English-Czech
-English-Estonian
-English-Finnish
-English-Hungarian
-English-Latin
-English-Latvian
-English-Lithuanian
-English-Polish
-English-Romanian
-English-Serbian
-English-Croatian
-English-Slovak
-English-Turkish
-English-Yiddish
-French-Russian
-French-Vietnamese
-French-Arabic
-French-Polish
-German-Russian
-German-Vietnamese
-German-Czech
-German-French
-German-Hungarian
-German-Italian
-German-Polish
-German-Slovak
-German-Turkish
-Italian-Portuguese
-Italian-Russian
-Spanish-Russian
-Spanish-German
-Spanish-Korean
-Russian-Arabic
-Russian-Turkish
-Russian-Ukrainian
-Russian-Vietnamese
-Russian-Armenian
-Russian-Azerbaijani
-Russian-Estonian
-Russian-Hebrew
-Russian-Turkish
-Korean-Indonesian
+en-ar: English-Arabic
+en-nl: English-Dutch
+en-fr: English-French
+en-de: English-German
+en-el: English-Greek
+en-iw: English-Hebrew
+en-id: English-Indonesian
+en-it: English-Italian
+en-ko: English-Korean
+en-no: English-Norwegian
+en-fa: English-Persian
+en-pt: English-Portuguese
+en-ru: English-Russian
+en-es: English-Spanish
+en-sv: English-Swedish
+en-tr: English-Turkish
+en-uk: English-Ukrainian
+en-vi: English-Vietnamese
+en-sq: English-Albanian
+en-hy: English-Armenian
+en-az: English-Azerbaijani
+en-bs: English-Bosnian
+en-bg: English-Bulgarian
+en-cs: English-Czech
+en-et: English-Estonian
+en-fi: English-Finnish
+en-hu: English-Hungarian
+en-la: English-Latin
+en-lv: English-Latvian
+en-lt: English-Lithuanian
+en-pl: English-Polish
+en-ro: English-Romanian
+en-sr: English-Serbian
+en-hr: English-Croatian
+en-sk: English-Slovak
+en-yi: English-Yiddish
+fr-ru: French-Russian
+fr-vi: French-Vietnamese
+fr-ar: French-Arabic
+fr-pl: French-Polish
+de-ru: German-Russian
+de-vi: German-Vietnamese
+de-cs: German-Czech
+de-fr: German-French
+de-hu: German-Hungarian
+de-it: German-Italian
+de-pl: German-Polish
+de-sk: German-Slovak
+de-tr: German-Turkish
+it-pt: Italian-Portuguese
+it-ru: Italian-Russian
+es-ru: Spanish-Russian
+es-de: Spanish-German
+es-ko: Spanish-Korean
+ru-ar: Russian-Arabic
+ru-tr: Russian-Turkish
+ru-uk: Russian-Ukrainian
+ru-vi: Russian-Vietnamese
+ru-hy: Russian-Armenian
+ru-az: Russian-Azerbaijani
+ru-et: Russian-Estonian
+ru-iw: Russian-Hebrew
+ru-tr: Russian-Turkish
+ko-id: Korean-Indonesian
 
