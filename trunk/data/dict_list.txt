@@ -19,7 +19,6 @@ en-vi: English-Vietnamese
 en-sq: English-Albanian
 en-hy: English-Armenian
 en-az: English-Azerbaijani
-en-bs: English-Bosnian
 en-bg: English-Bulgarian
 en-cs: English-Czech
 en-et: English-Estonian
