@@ -59,6 +59,6 @@ ru-hy: Russian-Armenian
 ru-az: Russian-Azerbaijani
 ru-et: Russian-Estonian
 ru-iw: Russian-Hebrew
-ru-tr: Russian-Turkish
+------------ru-tr: Russian-Turkish
 ko-id: Korean-Indonesian
 
