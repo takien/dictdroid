@@ -1,0 +1,6 @@
+English-Greek DictDroid is "offline dictionary" (doesn't require internet connection) with features:
+	- English-Greek dictionary with pronunciation.
+	- Greek-English dictionary.
+	- Easy to use with simple interface.
+	- View history and favorite words.
+	- Support Google Translate (requiring internet connection).
