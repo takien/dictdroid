@@ -1,0 +1,6 @@
+French<->Vietnamese DictDroid is "offline dictionary" (doesn't require internet connection) with features:
+	- French-Vietnamese dictionary with pronunciation.
+	- Vietnamese-French dictionary.
+	- Easy to use with simple interface.
+	- View history and favorite words.
+	- Support Google Translate (requiring internet connection).
