@@ -1,0 +1,6 @@
+Italian-Portuguese DictDroid is "offline dictionary" (doesn't require internet connection) with features:
+	- Italian-Portuguese dictionary with pronunciation.
+	- Portuguese-Italian dictionary.
+	- Easy to use with simple interface.
+	- View history and favorite words.
+	- Support Google Translate (requiring internet connection).
