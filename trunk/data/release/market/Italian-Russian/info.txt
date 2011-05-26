@@ -1,4 +1,4 @@
-Italian-Russian DictDroid is "offline dictionary" (doesn't require internet connection) with features:
+Italian<->Russian DictDroid is "offline dictionary" (doesn't require internet connection) with features:
 	- Italian-Russian dictionary with pronunciation.
 	- Russian-Italian dictionary.
 	- Easy to use with simple interface.
