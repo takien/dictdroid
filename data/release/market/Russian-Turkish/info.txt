@@ -1,0 +1,6 @@
+Russian<->Turkish DictDroid is "offline dictionary" (doesn't require internet connection) with features:
+	- Russian-Turkish dictionary.
+	- Turkish-Russian dictionary.
+	- Easy to use with simple interface.
+	- View history and favorite words.
+	- Support Google Translate (requiring internet connection).
