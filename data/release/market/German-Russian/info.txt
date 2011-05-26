@@ -1,6 +1,6 @@
 German<->Russian DictDroid is "offline dictionary" (doesn't require internet connection) with features:
 	- German-Russian dictionary with pronunciation.
-	- German-English dictionary.
+	- Russian-German dictionary.
 	- Easy to use with simple interface.
 	- View history and favorite words.
 	- Support Google Translate (requiring internet connection).
