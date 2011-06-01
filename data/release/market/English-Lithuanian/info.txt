@@ -1,0 +1,6 @@
+English<->Lithuanian DictDroid is "offline dictionary" (doesn't require internet connection) with features:
+	- English-Lithuanian dictionary with pronunciation.
+	- Lithuanian-English dictionary.
+	- Easy to use with simple interface.
+	- View history and favorite words.
+	- Support Google Translate (requiring internet connection).

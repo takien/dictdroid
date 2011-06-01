@@ -1,0 +1,6 @@
+English<->Polish DictDroid is "offline dictionary" (doesn't require internet connection) with features:
+	- English-Polish dictionary with pronunciation.
+	- Polish-English dictionary.
+	- Easy to use with simple interface.
+	- View history and favorite words.
+	- Support Google Translate (requiring internet connection).
