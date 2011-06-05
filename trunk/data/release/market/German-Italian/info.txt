@@ -1,0 +1,6 @@
+German<->Italian DictDroid is "offline dictionary" (doesn't require internet connection) with features:
+	- German-Italian dictionary with pronunciation.
+	- Italian-German dictionary with pronunciation.
+	- Easy to use with simple interface.
+	- View history and favorite words.
+	- Support Google Translate (requiring internet connection).
