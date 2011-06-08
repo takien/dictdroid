@@ -1,0 +1,6 @@
+Spanish<->German DictDroid is "offline dictionary" (doesn't require internet connection) with features:
+	- Spanish-German dictionary with pronunciation.
+	- German-Spanish dictionary with pronunciation.
+	- Easy to use with simple interface.
+	- View history and favorite words.
+	- Support Google Translate (requiring internet connection).
