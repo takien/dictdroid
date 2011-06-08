@@ -1,0 +1,6 @@
+Spanish<->Korean DictDroid is "offline dictionary" (doesn't require internet connection) with features:
+	- Spanish-Korean dictionary with pronunciation.
+	- Korean-Spanish dictionary.
+	- Easy to use with simple interface.
+	- View history and favorite words.
+	- Support Google Translate (requiring internet connection).
