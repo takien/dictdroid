@@ -1,5 +1,0 @@
-French-Russian: 77751 words
-Russian-French: 49669 words
-
-French-Vietnamese: 47428 words
-Vietnamese-French: 38350 words

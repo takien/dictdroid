@@ -1,5 +1,0 @@
-Italian-Portuguese: 25206 words
-Portuguese-Italian: 30045 words
-
-Italian-Russian: 70225 words
-Russian-Italian: 53149 words

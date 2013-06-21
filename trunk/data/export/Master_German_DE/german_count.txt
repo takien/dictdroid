@@ -1,5 +1,0 @@
-German-Russian: 175592 words
-Russian-German: 35328 words
-
-German-Vietnamese: 43632 words
-Vietnamese-German: 11922 words
